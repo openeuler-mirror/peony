@@ -4,7 +4,7 @@ Name:           peony
 Version:        2.2.0
 Release:        1
 Summary:       file Manager for the UKUI desktop
-License:        GPL-2.0 GPL-3.0+ Expat LGPL-3.0+
+License:        GPL-2.0+ GPL-3.0+ Expat LGPL-3.0+
 URL:            http://www.ukui.org
 Source0:        %{name}-%{version}.tar.gz
 

@@ -1,7 +1,7 @@
 %define debug_package %{nil}
 
 Name:           peony
-Version:        2.2.0
+Version:        2.1.2
 Release:        1
 Summary:       file Manager for the UKUI desktop
 License:        GPL-2.0+ GPL-3.0+ Expat LGPL-3.0+
@@ -9,6 +9,9 @@ URL:            http://www.ukui.org
 Source0:        %{name}-%{version}.tar.gz
 
 #BuildRequires: pkg-kde-tools,qtbase5-dev-tools,qttools5-dev-tools,
+BuildRequires: libudisks2-devel
+BuildRequires: libnotify-devel
+BuildRequires: gtk2-devel
 BuildRequires: pkg-config, qt5-qtbase-devel, qt5-qtbase-private-devel, qtchooser, glib2-devel, qt5-qtx11extras-devel, gsettings-qt-devel, poppler-devel, poppler-qt5-devel, kf5-kwindowsystem-devel
 Requires: peony-common, libpeony2
 Requires: gvfs
@@ -125,5 +128,5 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{_lib}/*.so
 
 %changelog
-* Thu Jul 9 2020 douyan <douyan@kylinos.cn> - 2.2.0-1
+* Thu Jul 9 2020 douyan <douyan@kylinos.cn> - 2.1.2-1
 - Init package for openEuler

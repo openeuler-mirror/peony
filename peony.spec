@@ -1,7 +1,7 @@
 %define debug_package %{nil}
 
 Name:           peony
-Version:        2.1.2
+Version:        3.0.4
 Release:        1
 Summary:       file Manager for the UKUI desktop
 License:        GPL-2.0+ GPL-3.0+ Expat LGPL-3.0+
@@ -12,9 +12,11 @@ Source0:        %{name}-%{version}.tar.gz
 BuildRequires: libudisks2-devel
 BuildRequires: libnotify-devel
 BuildRequires: gtk2-devel
-BuildRequires: pkg-config, qt5-qtbase-devel, qt5-qtbase-private-devel, qtchooser, glib2-devel, qt5-qtx11extras-devel, gsettings-qt-devel, poppler-devel, poppler-qt5-devel, kf5-kwindowsystem-devel
-Requires: peony-common, libpeony2
+BuildRequires: pkg-config, qt5-qtbase-devel, qt5-qtbase-private-devel, qtchooser, glib2-devel, qt5-qtx11extras-devel, gsettings-qt-devel, poppler-devel, poppler-qt5-devel, kf5-kwindowsystem-devel, libcanberra-devel
+Requires: peony-common, libpeony3
 Requires: gvfs
+
+patch0:  001-fix-excute-file.patch
 
 %description
  Peony is the official file manager for the UKUI desktop. It allows one
@@ -36,13 +38,13 @@ BuildRequires: pkg-config, qt5-qtbase-devel, qt5-qtbase-private-devel, qtchooser
  .
  This package contains the architecture independent files.
 
-%package -n libpeony2
+%package -n libpeony3
 Summary:     libraries for Peony components
 License:     LGPLv2+
 BuildRequires: pkg-config, qt5-qtbase-devel, qt5-qtbase-private-devel, qtchooser, glib2-devel, qt5-qtx11extras-devel, gsettings-qt-devel, poppler-devel, poppler-qt5-devel, kf5-kwindowsystem-devel
 Provides: libpeony
 
-%description -n libpeony2
+%description -n libpeony3
  Peony is the official file manager for the UKUI desktop. It allows one
  to browse directories, preview files and launch applications associated
  with them. It is also responsible for handling the icons on the UKUI
@@ -70,6 +72,7 @@ Provides: libpeony
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 qmake-qt5 
@@ -79,14 +82,6 @@ make
 %install
 rm -rf $RPM_BUILD_ROOT
 make INSTALL_ROOT=%{buildroot} install
-
-mkdir -p %{buildroot}/usr/share/applications
-mkdir -p %{buildroot}/etc/xdg/autostart
-cp -r %{_builddir}/%{name}-%{version}/data/peony.desktop %{buildroot}/usr/share/applications
-cp -r %{_builddir}/%{name}-%{version}/data/peony-computer.desktop %{buildroot}/usr/share/applications
-cp -r %{_builddir}/%{name}-%{version}/data/peony-home.desktop %{buildroot}/usr/share/applications
-cp -r %{_builddir}/%{name}-%{version}/data/peony-trash.desktop  %{buildroot}/usr/share/applications
-cp -r %{_builddir}/%{name}-%{version}/data/peony-desktop.desktop  %{buildroot}/etc/xdg/autostart
 
 #peony-common
 mkdir -p %{buildroot}/usr/share/dbus-1/interfaces
@@ -99,7 +94,7 @@ cp -r %{_builddir}/%{name}-%{version}/peony-qt-desktop/org.ukui.freedesktop.File
 cp -r %{_builddir}/%{name}-%{version}/translations/peony-qt/* %{buildroot}/usr/share/peony-qt
 cp -r %{_builddir}/%{name}-%{version}/translations/peony-qt-desktop/* %{buildroot}/usr/share/peony-qt-desktop
 
-#libpeony2
+#libpeony3
 mkdir -p %{buildroot}/usr/share/libpeony-qt
 cp -r %{_builddir}/%{name}-%{version}/translations/libpeony-qt/* %{buildroot}/usr/share/libpeony-qt
 
@@ -109,7 +104,7 @@ rm -rf $RPM_BUILD_ROOT
 %files 
 %{_prefix}/bin/*
 %{_datadir}/applications/*
-%{_sysconfdir}/xdg/autostart/*
+#%%{_sysconfdir}/xdg/autostart/*
 
 %files common
 %doc debian/copyright debian/changelog
@@ -118,7 +113,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/peony-qt/*
 %{_datadir}/peony-qt-desktop/*
 
-%files -n libpeony2
+%files -n libpeony3
 %{_prefix}/%{_lib}/*.so.*
 %{_datadir}/libpeony-qt/*
 
@@ -128,5 +123,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{_lib}/*.so
 
 %changelog
+* Mon Oct 26 2020 douyan <douyan@kylinos.cn> - 3.0.4-1
+- update to upstream version 3.0.4
+
 * Thu Jul 9 2020 douyan <douyan@kylinos.cn> - 2.1.2-1
 - Init package for openEuler

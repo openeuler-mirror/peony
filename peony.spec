@@ -2,7 +2,7 @@
 
 Name:           peony
 Version:        3.0.4
-Release:        1
+Release:        2
 Summary:       file Manager for the UKUI desktop
 License:        GPL-2.0+ GPL-3.0+ Expat LGPL-3.0+
 URL:            http://www.ukui.org
@@ -17,6 +17,7 @@ Requires: peony-common, libpeony3
 Requires: gvfs
 
 patch0:  001-fix-excute-file.patch
+patch1:  0001-adjust-desktop-readonly-icon-agree-with-icon-view.patch
 
 %description
  Peony is the official file manager for the UKUI desktop. It allows one
@@ -73,6 +74,7 @@ Provides: libpeony
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 qmake-qt5 
@@ -122,7 +124,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{_lib}/pkgconfig/*.pc
 %{_prefix}/%{_lib}/*.so
 
+
 %changelog
+* Tue Oct 26 2021 douyan <douyan@kylinos.cn> - 3.0.4-2
+- add patch:0001-adjust-desktop-readonly-icon-agree-with-icon-view.patch
+
 * Mon Oct 26 2020 douyan <douyan@kylinos.cn> - 3.0.4-1
 - update to upstream version 3.0.4
 

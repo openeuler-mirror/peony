@@ -2,7 +2,7 @@
 
 Name:           peony
 Version:        3.0.4
-Release:        1
+Release:        2
 Summary:       file Manager for the UKUI desktop
 License:        GPL-2.0+ GPL-3.0+ Expat LGPL-3.0+
 URL:            http://www.ukui.org
@@ -12,7 +12,7 @@ Source0:        %{name}-%{version}.tar.gz
 BuildRequires: libudisks2-devel
 BuildRequires: libnotify-devel
 BuildRequires: gtk2-devel
-BuildRequires: pkg-config, qt5-qtbase-devel, qt5-qtbase-private-devel, qtchooser, glib2-devel, qt5-qtx11extras-devel, gsettings-qt-devel, poppler-devel, poppler-qt5-devel, kf5-kwindowsystem-devel, libcanberra-devel
+BuildRequires: pkg-config, qt5-qtbase-devel, qt5-qttools-devel,qt5-qtbase-private-devel, qtchooser, glib2-devel, qt5-qtx11extras-devel, gsettings-qt-devel, poppler-devel, poppler-qt5-devel, kf5-kwindowsystem-devel, libcanberra-devel
 Requires: peony-common, libpeony3
 Requires: gvfs
 
@@ -123,6 +123,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{_lib}/*.so
 
 %changelog
+* Thu Feb 10 2022 tanyulong <tanyulong@kylinos.cn> - 3.0.4-2
+- add Buildrequires package
+
 * Mon Oct 26 2020 douyan <douyan@kylinos.cn> - 3.0.4-1
 - update to upstream version 3.0.4
 

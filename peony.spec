@@ -1,8 +1,8 @@
 %define debug_package %{nil}
 
 Name:           peony
-Version:        3.0.4
-Release:        2
+Version:        3.2.4
+Release:        1
 Summary:       file Manager for the UKUI desktop
 License:        GPL-2.0+ GPL-3.0+ Expat LGPL-3.0+
 URL:            http://www.ukui.org
@@ -12,11 +12,16 @@ Source0:        %{name}-%{version}.tar.gz
 BuildRequires: libudisks2-devel
 BuildRequires: libnotify-devel
 BuildRequires: gtk2-devel
-BuildRequires: pkg-config, qt5-qtbase-devel, qt5-qttools-devel,qt5-qtbase-private-devel, qtchooser, glib2-devel, qt5-qtx11extras-devel, gsettings-qt-devel, poppler-devel, poppler-qt5-devel, kf5-kwindowsystem-devel, libcanberra-devel
-Requires: peony-common, libpeony3
-Requires: gvfs
+BuildRequires: pkg-config, qt5-qtbase-devel, qt5-qtbase-private-devel, qtchooser, glib2-devel, qt5-qtx11extras-devel, gsettings-qt-devel, poppler-devel, poppler-qt5-devel, kf5-kwindowsystem-devel, libcanberra-devel
+BuildRequires: openssl-devel
+BuildRequires: kf5-kwayland
+BuildRequires: kf5-kwayland-devel
+BuildRequires: wayland-devel
+BuildRequires: qt5-qttools-devel
 
-patch0:  001-fix-excute-file.patch
+Requires: peony-common, libpeony3
+Requires: gvfs, dvd+rw-tools ,libcanberra-devel
+
 
 %description
  Peony is the official file manager for the UKUI desktop. It allows one
@@ -72,7 +77,6 @@ Provides: libpeony
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 qmake-qt5 
@@ -105,6 +109,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/bin/*
 %{_datadir}/applications/*
 #%%{_sysconfdir}/xdg/autostart/*
+/etc/xdg/autostart/peony-desktop.desktop
+/usr/share/glib-2.0/schemas/org.ukui.peony.settings.gschema.xml
 
 %files common
 %doc debian/copyright debian/changelog
@@ -123,6 +129,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{_lib}/*.so
 
 %changelog
+* Tue Feb 22 2022 tanyulong <tanyulong@kylinos.cn> - 3.2.4-1
+- update version 3.2.4
+
 * Thu Feb 10 2022 tanyulong <tanyulong@kylinos.cn> - 3.0.4-2
 - add Buildrequires package
 

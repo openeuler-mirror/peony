@@ -1,12 +1,12 @@
 %define debug_package %{nil}
 
-Name:           peony
-Version:        3.2.4
-Release:        2
+Name:          peony
+Version:       3.2.4
+Release:       3
 Summary:       file Manager for the UKUI desktop
-License:        GPL-3.0-or-later and MIT and BSD-3-Clause
-URL:            http://www.ukui.org
-Source0:        %{name}-%{version}.tar.gz
+License:       GPL-3.0-or-later and MIT and BSD-3-Clause
+URL:           http://www.ukui.org
+Source0:       %{name}-%{version}.tar.gz
 
 #BuildRequires: pkg-kde-tools,qtbase5-dev-tools,qttools5-dev-tools,
 BuildRequires: libudisks2-devel
@@ -92,11 +92,13 @@ mkdir -p %{buildroot}/usr/share/dbus-1/interfaces
 mkdir -p %{buildroot}/usr/share/dbus-1/services
 mkdir -p %{buildroot}/usr/share/peony-qt
 mkdir -p %{buildroot}/usr/share/peony-qt-desktop
+mkdir -p %{buildroot}/usr/share/kylin-user-guide/data/guide/peony
 
 cp -r %{_builddir}/%{name}-%{version}/peony-qt-desktop/freedesktop-dbus-interfaces.xml %{buildroot}/usr/share/dbus-1/interfaces
 cp -r %{_builddir}/%{name}-%{version}/peony-qt-desktop/org.ukui.freedesktop.FileManager1.service %{buildroot}/usr/share/dbus-1/services
 cp -r %{_builddir}/%{name}-%{version}/translations/peony-qt/* %{buildroot}/usr/share/peony-qt
 cp -r %{_builddir}/%{name}-%{version}/translations/peony-qt-desktop/* %{buildroot}/usr/share/peony-qt-desktop
+cp -r %{_builddir}/%{name}-%{version}/data/peony/* %{buildroot}/usr/share/kylin-user-guide/data/guide/peony/
 
 #libpeony3
 mkdir -p %{buildroot}/usr/share/libpeony-qt
@@ -108,16 +110,17 @@ rm -rf $RPM_BUILD_ROOT
 %files 
 %{_prefix}/bin/*
 %{_datadir}/applications/*
-#%%{_sysconfdir}/xdg/autostart/*
-/etc/xdg/autostart/peony-desktop.desktop
-/usr/share/glib-2.0/schemas/org.ukui.peony.settings.gschema.xml
 
 %files common
 %doc debian/copyright debian/changelog
 %{_datadir}/dbus-1/interfaces/*
 %{_datadir}/dbus-1/services/*
+%{_datadir}/glib-2.0/schemas/org.ukui.peony.settings.gschema.xml
 %{_datadir}/peony-qt/*
 %{_datadir}/peony-qt-desktop/*
+%{_datadir}/kylin-user-guide/data/guide/peony
+%{_sysconfdir}/xdg/autostart/peony-desktop.desktop
+
 
 %files -n libpeony3
 %{_prefix}/%{_lib}/*.so.*
@@ -129,6 +132,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{_lib}/*.so
 
 %changelog
+* Thu Jun 9 2022 peijiankang <peijiankang@kylinos.cn> - 3.2.4-3
+- add kylin-user-guide files 
+
 * Wed Apr 27 2022 wangyueliang <wangyueliang@kylinos.cn> - 3.2.4-2
 - Improve the project according to the requirements of compliance improvement.
 

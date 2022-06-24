@@ -1,12 +1,12 @@
 %define debug_package %{nil}
 
-Name:           peony
-Version:        3.2.4
-Release:        1
+Name:          peony
+Version:       3.2.4
+Release:       3
 Summary:       file Manager for the UKUI desktop
-License:        GPL-2.0+ GPL-3.0+ Expat LGPL-3.0+
-URL:            http://www.ukui.org
-Source0:        %{name}-%{version}.tar.gz
+License:       GPL-3.0-or-later and MIT and BSD-3-Clause
+URL:           http://www.ukui.org
+Source0:       %{name}-%{version}.tar.gz
 
 #BuildRequires: pkg-kde-tools,qtbase5-dev-tools,qttools5-dev-tools,
 BuildRequires: libudisks2-devel
@@ -31,7 +31,7 @@ Requires: gvfs, dvd+rw-tools ,libcanberra-devel
 
 %package common
 Summary:     file manager for the UKUI desktop (common files)
-License:     LGPLv2+
+License:     GPL-3.0-or-later
 BuildRequires: pkg-config, qt5-qtbase-devel, qt5-qtbase-private-devel, qtchooser, glib2-devel, qt5-qtx11extras-devel, gsettings-qt-devel, poppler-devel, poppler-qt5-devel, kf5-kwindowsystem-devel
 
 
@@ -45,7 +45,7 @@ BuildRequires: pkg-config, qt5-qtbase-devel, qt5-qtbase-private-devel, qtchooser
 
 %package -n libpeony3
 Summary:     libraries for Peony components
-License:     LGPLv2+
+License:     LGPL-3.0-or-later and MIT and BSD-3-Clause
 BuildRequires: pkg-config, qt5-qtbase-devel, qt5-qtbase-private-devel, qtchooser, glib2-devel, qt5-qtx11extras-devel, gsettings-qt-devel, poppler-devel, poppler-qt5-devel, kf5-kwindowsystem-devel
 Provides: libpeony
 
@@ -60,7 +60,7 @@ Provides: libpeony
 
 %package -n libpeony-dev
 Summary:     libraries for Peony components (development files)
-License:     LGPLv2+
+License:     LGPL-3.0-or-later and MIT and BSD-3-Clause
 #BuildRequires: pkg-config, qt5-qtbase-devel, qt5-qtbase-private-devel, qtchooser, glib2-devel, qt5-qtx11extras-devel,
 # gsettings-qt-devel, poppler-devel, poppler-qt5-devel, kf5-kwindowsystem-devel
 Provides: libpeony
@@ -92,11 +92,13 @@ mkdir -p %{buildroot}/usr/share/dbus-1/interfaces
 mkdir -p %{buildroot}/usr/share/dbus-1/services
 mkdir -p %{buildroot}/usr/share/peony-qt
 mkdir -p %{buildroot}/usr/share/peony-qt-desktop
+mkdir -p %{buildroot}/usr/share/kylin-user-guide/data/guide/peony
 
 cp -r %{_builddir}/%{name}-%{version}/peony-qt-desktop/freedesktop-dbus-interfaces.xml %{buildroot}/usr/share/dbus-1/interfaces
 cp -r %{_builddir}/%{name}-%{version}/peony-qt-desktop/org.ukui.freedesktop.FileManager1.service %{buildroot}/usr/share/dbus-1/services
 cp -r %{_builddir}/%{name}-%{version}/translations/peony-qt/* %{buildroot}/usr/share/peony-qt
 cp -r %{_builddir}/%{name}-%{version}/translations/peony-qt-desktop/* %{buildroot}/usr/share/peony-qt-desktop
+cp -r %{_builddir}/%{name}-%{version}/data/peony/* %{buildroot}/usr/share/kylin-user-guide/data/guide/peony/
 
 #libpeony3
 mkdir -p %{buildroot}/usr/share/libpeony-qt
@@ -108,16 +110,17 @@ rm -rf $RPM_BUILD_ROOT
 %files 
 %{_prefix}/bin/*
 %{_datadir}/applications/*
-#%%{_sysconfdir}/xdg/autostart/*
-/etc/xdg/autostart/peony-desktop.desktop
-/usr/share/glib-2.0/schemas/org.ukui.peony.settings.gschema.xml
 
 %files common
 %doc debian/copyright debian/changelog
 %{_datadir}/dbus-1/interfaces/*
 %{_datadir}/dbus-1/services/*
+%{_datadir}/glib-2.0/schemas/org.ukui.peony.settings.gschema.xml
 %{_datadir}/peony-qt/*
 %{_datadir}/peony-qt-desktop/*
+%{_datadir}/kylin-user-guide/data/guide/peony
+%{_sysconfdir}/xdg/autostart/peony-desktop.desktop
+
 
 %files -n libpeony3
 %{_prefix}/%{_lib}/*.so.*
@@ -129,11 +132,17 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{_lib}/*.so
 
 %changelog
+* Thu Jun 9 2022 peijiankang <peijiankang@kylinos.cn> - 3.2.4-3
+- add kylin-user-guide files 
+
+* Wed Apr 27 2022 wangyueliang <wangyueliang@kylinos.cn> - 3.2.4-2
+- Improve the project according to the requirements of compliance improvement.
+
 * Tue Feb 22 2022 tanyulong <tanyulong@kylinos.cn> - 3.2.4-1
 - update version 3.2.4
 
-* Thu Feb 10 2022 tanyulong <tanyulong@kylinos.cn> - 3.0.4-2
-- add Buildrequires package
+* Tue Oct 26 2021 douyan <douyan@kylinos.cn> - 3.0.4-2
+- add patch:0001-adjust-desktop-readonly-icon-agree-with-icon-view.patch
 
 * Mon Oct 26 2020 douyan <douyan@kylinos.cn> - 3.0.4-1
 - update to upstream version 3.0.4

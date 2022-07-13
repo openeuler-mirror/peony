@@ -2,13 +2,12 @@
 
 Name:          peony
 Version:       3.2.4
-Release:       3
+Release:       4
 Summary:       file Manager for the UKUI desktop
 License:       GPL-3.0-or-later and MIT and BSD-3-Clause
 URL:           http://www.ukui.org
 Source0:       %{name}-%{version}.tar.gz
 
-#BuildRequires: pkg-kde-tools,qtbase5-dev-tools,qttools5-dev-tools,
 BuildRequires: libudisks2-devel
 BuildRequires: libnotify-devel
 BuildRequires: gtk2-devel
@@ -20,6 +19,7 @@ BuildRequires: wayland-devel
 BuildRequires: qt5-qttools-devel
 
 Requires: peony-common, libpeony3
+Requires: qt5-qttranslations
 Requires: gvfs, dvd+rw-tools ,libcanberra-devel
 
 
@@ -132,6 +132,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{_lib}/*.so
 
 %changelog
+* Wed Jul 13 2022 peijiankang <peijiankang@kylinos.cn> - 3.2.4-4
+- add qt5-qttranslations
+
 * Thu Jun 9 2022 peijiankang <peijiankang@kylinos.cn> - 3.2.4-3
 - add kylin-user-guide files 
 

@@ -2,11 +2,12 @@
 
 Name:          peony
 Version:       3.2.4
-Release:       4
+Release:       5
 Summary:       file Manager for the UKUI desktop
 License:       GPL-3.0-or-later and MIT and BSD-3-Clause
 URL:           http://www.ukui.org
 Source0:       %{name}-%{version}.tar.gz
+Patch01:       0001-Change-the-folder-attribute-Time-Modified-to-Time-Created.patch
 
 BuildRequires: libudisks2-devel
 BuildRequires: libnotify-devel
@@ -77,6 +78,7 @@ Provides: libpeony
 
 %prep
 %setup -q
+%patch01 -p1
 
 %build
 qmake-qt5 
@@ -132,6 +134,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{_lib}/*.so
 
 %changelog
+* Wed Dec 28 2022 peijiankang <peijiankang@kylinos.cn> - 3.2.4-5
+- Change the folder attribute Time Modified to Time Created
+
 * Wed Jul 13 2022 peijiankang <peijiankang@kylinos.cn> - 3.2.4-4
 - add qt5-qttranslations
 

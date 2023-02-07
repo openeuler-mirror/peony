@@ -1,8 +1,6 @@
-%define debug_package %{nil}
-
 Name:          peony
 Version:       3.10.0
-Release:       1
+Release:       2
 Summary:       file Manager for the UKUI desktop
 License:       GPL-3.0-or-later and MIT and BSD-3-Clause
 URL:           http://www.ukui.org
@@ -81,13 +79,13 @@ Provides: libpeony
 %setup -q
 
 %build
-qmake-qt5 
-make
+%{qmake_qt5}
+%{make_build}
 
 
 %install
 rm -rf $RPM_BUILD_ROOT
-make INSTALL_ROOT=%{buildroot} install
+%{make_install} INSTALL_ROOT=%{buildroot}
 
 #peony-common
 mkdir -p %{buildroot}/usr/share/dbus-1/interfaces
@@ -135,6 +133,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{_lib}/*.so
 
 %changelog
+* Tue Feb 07 2023 peijiankang <peijiankang@kylinos.cn> - 3.10.0-2
+- add build debuginfo and debugsource
+
 * Mon Nov 14 2022 tanyulong <tanyulong@kylinos.cn> - 3.10.0-1
 - update version 3.10.0
 

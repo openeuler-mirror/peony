@@ -1,13 +1,10 @@
-%define debug_package %{nil}
-
 Name:          peony
-Version:       3.2.4
-Release:       5
+Version:       3.10.0
+Release:       2
 Summary:       file Manager for the UKUI desktop
 License:       GPL-3.0-or-later and MIT and BSD-3-Clause
 URL:           http://www.ukui.org
 Source0:       %{name}-%{version}.tar.gz
-Patch01:       0001-Change-the-folder-attribute-Time-Modified-to-Time-Created.patch
 
 BuildRequires: libudisks2-devel
 BuildRequires: libnotify-devel
@@ -18,6 +15,8 @@ BuildRequires: kf5-kwayland
 BuildRequires: kf5-kwayland-devel
 BuildRequires: wayland-devel
 BuildRequires: qt5-qttools-devel
+BuildRequires: ukui-interface
+BuildRequires: bamf-devel qt5-qtsvg-devel qt5-qtdeclarative-devel
 
 Requires: peony-common, libpeony3
 Requires: qt5-qttranslations
@@ -78,16 +77,15 @@ Provides: libpeony
 
 %prep
 %setup -q
-%patch01 -p1
 
 %build
-qmake-qt5 
-make
+%{qmake_qt5}
+%{make_build}
 
 
 %install
 rm -rf $RPM_BUILD_ROOT
-make INSTALL_ROOT=%{buildroot} install
+%{make_install} INSTALL_ROOT=%{buildroot}
 
 #peony-common
 mkdir -p %{buildroot}/usr/share/dbus-1/interfaces
@@ -118,6 +116,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/dbus-1/interfaces/*
 %{_datadir}/dbus-1/services/*
 %{_datadir}/glib-2.0/schemas/org.ukui.peony.settings.gschema.xml
+%{_datadir}/glib-2.0/schemas/org.ukui.peony.desktop.settings.gschema.xml
 %{_datadir}/peony-qt/*
 %{_datadir}/peony-qt-desktop/*
 %{_datadir}/kylin-user-guide/data/guide/peony
@@ -134,8 +133,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{_lib}/*.so
 
 %changelog
-* Wed Dec 28 2022 peijiankang <peijiankang@kylinos.cn> - 3.2.4-5
-- Change the folder attribute Time Modified to Time Created
+* Tue Feb 07 2023 peijiankang <peijiankang@kylinos.cn> - 3.10.0-2
+- add build debuginfo and debugsource
+
+* Mon Nov 14 2022 tanyulong <tanyulong@kylinos.cn> - 3.10.0-1
+- update version 3.10.0
 
 * Wed Jul 13 2022 peijiankang <peijiankang@kylinos.cn> - 3.2.4-4
 - add qt5-qttranslations

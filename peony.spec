@@ -1,10 +1,11 @@
 Name:          peony
 Version:       3.10.0
-Release:       2
+Release:       3
 Summary:       file Manager for the UKUI desktop
 License:       GPL-3.0-or-later and MIT and BSD-3-Clause
 URL:           http://www.ukui.org
 Source0:       %{name}-%{version}.tar.gz
+Patch01:       0001-fix-share-error-of-peony.patch
 
 BuildRequires: libudisks2-devel
 BuildRequires: libnotify-devel
@@ -77,6 +78,7 @@ Provides: libpeony
 
 %prep
 %setup -q
+%patch01 -p1
 
 %build
 %{qmake_qt5}
@@ -133,6 +135,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{_lib}/*.so
 
 %changelog
+* Tue Jun 06 2023 peijiankang <peijiankang@kylinos.cn> - 3.10.0-3
+- fix share error of peony
+
 * Tue Feb 07 2023 peijiankang <peijiankang@kylinos.cn> - 3.10.0-2
 - add build debuginfo and debugsource
 

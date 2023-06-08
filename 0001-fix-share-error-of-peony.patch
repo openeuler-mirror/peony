@@ -1,0 +1,28 @@
+From cd35751b5c23c0ed0b2e81026619fd2750ad19d9 Mon Sep 17 00:00:00 2001
+From: peijiankang <peijiankang@kylinos.cn>
+Date: Tue, 6 Jun 2023 17:26:46 +0800
+Subject: [PATCH] fix share error of peony
+
+---
+ libpeony-qt/usershare-manager.cpp | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/libpeony-qt/usershare-manager.cpp b/libpeony-qt/usershare-manager.cpp
+index 48c719d..0849dc7 100644
+--- a/libpeony-qt/usershare-manager.cpp
++++ b/libpeony-qt/usershare-manager.cpp
+@@ -84,8 +84,9 @@ QString UserShareInfoManager::exectueCommand (QStringList& args, bool* retb /* o
+     proc.open();
+ 
+     // Check whether sambashare exists and contains the current user
+-    QProcess::execute ("bash pkexec /usr/bin/peony-share.sh", QStringList() << g_get_user_name () << sharedPath);
+-
++    QString cmdtest = QString("pkexec /usr/bin/peony-share.sh %1 %2").arg(g_get_user_name()).arg(sharedPath);
++    QProcess::execute (cmdtest);
++    
+     // Shared folder
+     args.prepend ("net");
+     proc.start("bash");
+-- 
+2.33.0
+

@@ -1,6 +1,6 @@
 Name:          peony
 Version:       3.10.0
-Release:       2
+Release:       3
 Summary:       file Manager for the UKUI desktop
 License:       GPL-3.0-or-later and MIT and BSD-3-Clause
 URL:           http://www.ukui.org
@@ -79,7 +79,13 @@ Provides: libpeony
 %setup -q
 
 %build
-%{qmake_qt5}
+%if "%toolchain" == "clang"
+	export CFLAGS="$CFLAGS -Wno-error=uninitialized-const-reference"
+	export CXXFLAGS="$CXXFLAGS -Wno-error=uninitialized-const-reference"
+	%{qmake_qt5} -spec linux-clang
+%else 
+	%{qmake_qt5}
+%endif
 %{make_build}
 
 
@@ -133,6 +139,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/%{_lib}/*.so
 
 %changelog
+* Tue Jun 20 2023 yoo <sunyuechi@iscas.ac.cn> - 3.10.0-3
+- fix clang build error
+
 * Tue Feb 07 2023 peijiankang <peijiankang@kylinos.cn> - 3.10.0-2
 - add build debuginfo and debugsource
 
